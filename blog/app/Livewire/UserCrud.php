@@ -4,10 +4,12 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+ use \Livewire\WithPagination;
 
 class UserCrud extends Component
 {
-    public $users, $name, $email, $phone, $user_id,$city;
+    use WithPagination;
+    public  $name, $email, $phone, $user_id,$city;
     public $isOpen = 0;
 
    
@@ -69,9 +71,33 @@ class UserCrud extends Component
         User::find($id)->delete();
         session()->flash('message', 'User Deleted.');
     }
+
+//search box
+public int $perPage=5;
+   
+     public string $search='';
+  protected $updatesQueryString = ['search', 'perPage'];
+
+public function updatingPerPage()
+{
+    $this->resetPage();
+}
+
+     public function updatingSearch()
+     {                                                     
+         $this->resetPage();
+     }
      public function render()
     {
-        $this->users = User::all();
-        return view('livewire.user-crud');
+      
+        $users = User::where('name', 'like', '%' . $this->search . '%')
+            ->orWhere('email', 'like', '%' . $this->search . '%')
+            ->orWhere('phone', 'like', '%' . $this->search . '%')
+            ->orWhere('city', 'like', '%' . $this->search . '%')
+            ->orderBy('id', 'desc')
+            ->paginate($this->perPage);
+      //
+      return view('livewire.user-crud', ['users' => $users]);
+;
     }
 }

@@ -5,6 +5,9 @@
         <form wire:submit.prevent="store">
             <input type="text" wire:model="name" placeholder="Name" class="w-full p-2 border mb-2">
             <input type="email" wire:model="email" placeholder="Email" class="w-full p-2 border mb-2">
+            @error('email')<span class="text-red-500 text-sm">{{ $message }}</span>
+                
+            @enderror
             <input type="text" wire:model="phone" placeholder="Phone" class="w-full p-2 border mb-2">
             <input type="text" wire:model="city" placeholder="City" class="w-full p-2 border mb-4">
 

@@ -2,13 +2,28 @@
     @if (session()->has('message'))
         <div class="bg-green-200 text-green-800 p-2 mb-2">{{ session('message') }}</div>
     @endif
-
+<input type="text"
+           wire:model.live="search"
+           placeholder="Search by name or email"
+           class="border rounded p-2 w-full mb-4"
+           wire:keyup="set(search, $event.target.value)"
+           />
     <button wire:click="create" class="bg-blue-500 text-white px-4 py-2 rounded mb-3">Create User</button>
+    <div class="mb-4">
+    <label for="perPage" class="mr-2 font-semibold">Results per page:</label>
+    <select wire:model.live="perPage" id="perPage" class="border p-1 rounded">
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="8">8</option>
+        <option value="10">10</option>
+    </select>
+</div>
 
   @if($isOpen)   
         @include('livewire.user-modal')
     @endif
 
+    
     <table class="w-full border-collapse">
         <thead>
             <tr class="bg-gray-100 text-left">
@@ -34,4 +49,7 @@
             @endforeach
         </tbody>
     </table>
+     <div class="mt-4">
+    {{ $users->links() }}
+</div>
 </div>
