@@ -2,9 +2,13 @@
 <!DOCTYPE html>
  <html>
     <head>
-
+         @vite('resources/css/app.css')  
+@livewireStyles
+        
     </head>
-    <body>
-        <h1>Hello world</h1>
+    <body class="max-w-5xl mx-auto p-4  bg-gray-100">
+        
+      @livewire('user-form')
+        @livewireScripts
     </body>    
  </html>

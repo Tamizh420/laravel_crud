@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
-Route::get('/', function () {
+Route::get('/adhaar', function () {
     return view('welcome');
 });
 
@@ -17,7 +17,7 @@ Route::get('/posts', [PostController::class, 'index']);
 Route::get('/crud', function () {
     return view('crud');
 });
-
+ 
 
 
 

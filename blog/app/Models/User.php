@@ -45,4 +45,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+  public function adhaar(){
+    return $this->hasOne(adhaar::class);
+  }
 }

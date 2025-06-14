@@ -21,7 +21,7 @@
 </div>
 
   @if($isOpen)   
-        @include('livewire.user-modal')
+        @include('livewire.form-modal')
     @endif
 
     
@@ -32,6 +32,8 @@
                 <th class="p-2">Email</th>
                 <th class="p-2">Phone</th>
                 <th class="p-2">city</th>
+                <th class="p-2">Aadhaar Number</th>
+                <th class="p-2">Aadhaar Phone</th>
                  
                 <th class="p-2">Actions</th>
               
@@ -44,6 +46,9 @@
                 <td class="p-2">{{ $user->email }}</td>
                 <td class="p-2">{{ $user->phone }}</td>
                 <td class="p-2">{{ $user->city }}</td>
+                <td class="p-2">{{ $user->adhaar?->aadhaar_number }}</td>
+                <td class="p-2">{{ $user->adhaar?->phone_number }}</td>
+
                 
               
                 <td class="p-2">

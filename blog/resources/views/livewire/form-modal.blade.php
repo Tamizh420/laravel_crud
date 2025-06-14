@@ -21,7 +21,13 @@
                    class="w-full p-2 border rounded mb-2" />
             @error('city') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
 
-        
+            <input type="text" wire:model.defer="aadhaar_number" placeholder="Aadhaar Number"
+                   class="w-full p-2 border rounded mb-2" />
+            @error('aadhaar_number') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+
+            <input type="text" wire:model.defer="phone_number" placeholder="Phone Number"
+                   class="w-full p-2 border rounded mb-4" />
+            @error('phone_number') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
 
             <div class="flex justify-end space-x-2">
                 <button type="button" wire:click="closeModal"

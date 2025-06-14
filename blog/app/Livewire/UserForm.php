@@ -6,10 +6,9 @@ use Livewire\Component;
 use App\Models\User;
 use App\Models\adhaar;
 use Livewire\WithPagination;
-
-class UserCrud extends Component
+class UserForm extends Component
 {
-    use WithPagination;
+      use WithPagination;
 
     public $name, $email, $phone, $user_id, $city;
     public $aadhaar_number, $phone_number;
@@ -41,8 +40,8 @@ class UserCrud extends Component
         $this->phone = '';
         $this->user_id = '';
         $this->city = '';
-    //     $this->aadhaar_number = '';
-    //     $this->phone_number = '';
+        $this->aadhaar_number = '';
+        $this->phone_number = '';
     }
 
     public function store()
@@ -52,8 +51,8 @@ class UserCrud extends Component
             'email' => 'required|email|unique:users,email,' . $this->user_id,
             'phone' => 'required',
             'city' => 'required',
-            // 'aadhaar_number' => 'required|digits:12|unique:adhaars,aadhaar_number,' . $this->user_id . ',user_id',
-            // 'phone_number' => 'required|digits:10',
+            'aadhaar_number' => 'required|digits:12|unique:adhaars,aadhaar_number,' . $this->user_id . ',user_id',
+            'phone_number' => 'required|digits:10',
         ]);
 
         // First create or update the user
@@ -65,6 +64,18 @@ class UserCrud extends Component
             'password' => bcrypt('secret'), // use bcrypt instead of plain string
         ]);
 
+     
+if ($user->aadhaar) {
+    $user->aadhaar->update([
+        'aadhaar_number' => $this->aadhaar_number,
+        'phone_number' => $this->phone_number,
+    ]);
+} else {
+    $user->adhaar()->create([
+        'aadhaar_number' => $this->aadhaar_number,
+        'phone_number' => $this->phone_number,
+    ]);
+}
         // Then create or update the Aadhaar using the user's ID
        
 
@@ -85,13 +96,13 @@ class UserCrud extends Component
         $this->city = $user->city;
 
         // Ensure correct relation name: aadhaar()
-        // if ($user->aadhaar) {
-        //     $this->aadhaar_number = $user->aadhaar->aadhaar_number;
-        //     $this->phone_number = $user->aadhaar->phone_number;
-        // } else {
-        //     $this->aadhaar_number = '';
-        //     $this->phone_number = '';
-        // }
+        if ($user->aadhaar) {
+            $this->aadhaar_number = $user->aadhaar->aadhaar_number;
+            $this->phone_number = $user->aadhaar->phone_number;
+        } else {
+            $this->aadhaar_number = '';
+            $this->phone_number = '';
+        }
 
         $this->openModal();
     }
@@ -129,6 +140,6 @@ class UserCrud extends Component
             ->orderBy('id', 'desc')
             ->paginate($this->perPage);
 
-        return view('livewire.user-crud', ['users' => $users]);
+        return view('livewire.user-form', ['users' => $users]);
     }
 }
