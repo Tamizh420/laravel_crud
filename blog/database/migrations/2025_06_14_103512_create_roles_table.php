@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::table('users', function (Blueprint $table) {
-    if (!Schema::hasColumn('users', 'city')) {
-        $table->string('city')->nullable();
-    }
-});
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('role')->default('user'); // Default role is 'user'
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('city');   //
-        });
+        Schema::dropIfExists('roles');
     }
 };

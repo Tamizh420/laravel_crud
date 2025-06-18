@@ -48,4 +48,10 @@ class User extends Authenticatable
   public function adhaar(){
     return $this->hasOne(adhaar::class);
   }
+    public function roles()
+    {
+        return $this->hasMany(Roles::class);
+    }
+
+    
 }
